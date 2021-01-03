@@ -1,0 +1,14 @@
+__pycache__
+.coverage
+.env
+.env.sample
+.git*
+.pytest_cache
+.travis.yml
+Procfile
+README.rst
+LICENSE
+logo.png
+env
+htmlcov
+mongo

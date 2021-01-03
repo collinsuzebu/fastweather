@@ -1,0 +1,8 @@
+[run]
+source=
+    *\fastweather
+omit=
+    *\env*,
+    *\fastweather\config.py*
+    *\fastweather\htmlcov\*
+    *\fastweather\tests\*
