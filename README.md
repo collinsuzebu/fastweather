@@ -27,7 +27,9 @@ pip install -r requirements.txt
 ```
 **Setting up environment variables**
 Include any environment variable like so:
-`export API_OPEN_WEATHER_MAP_KEY=your_secret_key`
+```
+export API_OPEN_WEATHER_MAP_KEY=your_secret_key
+```
 
 **To run the web application in debug mode:**
 ```uvicorn fastweather.main:app --reload```
