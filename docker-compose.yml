@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+    image: 'fastweather_image'
+    container_name: 'fastweather_container'
+    restart: always
+    command:
+      uvicorn fastweather.main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - mongo-network
+    volumes:
+      - ./:/usr/src/app/
+    ports:
+      - ${API_PORT}:8000
+    depends_on:
+      - mongo
+    environment:
+      MONGO_ROOT_USER: ${MONGO_ROOT_USER}
+      MONGO_ROOT_PASS: ${MONGO_ROOT_PASS}
+      MONGO_HOST: 'mongo'
+      MONGO_PORT: 27017
+      API_OPEN_WEATHER_MAP_KEY: ${API_OPEN_WEATHER_MAP_KEY}
+      STRICT_DEV: ${STRICT_DEV}
+
+  mongo:
+    image: mongo:4.4.2
+    restart: always
+    container_name: 'fastweather_mongodb'
+    networks:
+      - mongo-network
+    volumes:
+      - ./mongo/db:/data/db
+    ports:
+      - ${MONGO_PORT}:27017
+    command: mongod --logpath=/dev/null
+    environment:
+      MONGO_DATA_DIR: /data/db
+      MONGO_LOG_DIR: /dev/null
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASS}
+      MONGO_INITDB_DATABASE: "fastweather_db"
+
+
+networks:
+  mongo-network:
+    driver: bridge
